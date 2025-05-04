@@ -13,15 +13,16 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-
     const currentUser = JSON.parse(localStorage.getItem('user'));
 
+    // Check for token
     useEffect(() => {
         if (!localStorage.getItem('token')) {
             navigate('/login');
         }
     }, [navigate]);
 
+    // Fetching chats
     const fetchChats = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -51,6 +52,7 @@ const Home = () => {
         <div style={{ backgroundColor: '#f4f4f9', minHeight: '100vh' }}>
             <Navbar setChats={setChats} setSelectedChat={setSelectedChat} />
             <div style={{ display: 'flex', height: 'calc(100vh - 60px)', flexDirection: 'row' }}>
+                {/* Chat List Section */}
                 <div
                     style={{
                         width: '30%',
@@ -75,8 +77,24 @@ const Home = () => {
                             currentUser={currentUser}
                         />
                     )}
+                    {/* Button to trigger Group Chat Modal */}
+                    <button
+                        onClick={() => setShowModal(true)}
+                        style={{
+                            marginTop: '20px',
+                            padding: '10px',
+                            backgroundColor: '#007BFF',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            width: '100%',
+                        }}
+                    >
+                        Create Group Chat
+                    </button>
                 </div>
 
+                {/* Chat Box Section */}
                 <div
                     style={{
                         flex: 1,
@@ -99,6 +117,7 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* Group Chat Modal */}
             {showModal && <GroupChatModal onClose={() => setShowModal(false)} />}
         </div>
     );

@@ -14,7 +14,7 @@ const Navbar = ({ setChats, setSelectedChat }) => {
     };
 
     const handleSearch = async () => {
-        if (!search) return;
+        if (!search) return setResults([]);
 
         try {
             const config = {
@@ -41,7 +41,7 @@ const Navbar = ({ setChats, setSelectedChat }) => {
 
             const { data } = await axios.post('/api/chat/access', { userId }, config);
             setResults([]);
-            setSearch('');
+            setSearch(''); // Clear search input after user select
 
             // Update the chat list and selected chat
             if (setChats) {
@@ -58,6 +58,11 @@ const Navbar = ({ setChats, setSelectedChat }) => {
         } catch (error) {
             console.error('Error accessing chat:', error);
         }
+    };
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+        handleSearch(); // Trigger search as the user types
     };
 
     return (
@@ -78,12 +83,9 @@ const Navbar = ({ setChats, setSelectedChat }) => {
                     type="text"
                     placeholder="Search users..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    style={{ padding: '5px', marginRight: '5px' }}
+                    onChange={handleSearchChange}
+                    style={{ padding: '8px', marginRight: '5px', borderRadius: '4px' }}
                 />
-                <button onClick={handleSearch} style={{ padding: '5px 10px', marginRight: '10px' }}>
-                    Search
-                </button>
 
                 {results.length > 0 && (
                     <ul style={{
@@ -96,13 +98,15 @@ const Navbar = ({ setChats, setSelectedChat }) => {
                         borderRadius: '5px',
                         boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
                         zIndex: 999,
-                        width: '250px'
+                        width: '250px',
+                        maxHeight: '300px', // To prevent it from overflowing the page
+                        overflowY: 'auto',
                     }}>
                         {results.map((user) => (
                             <li
                                 key={user._id}
                                 onClick={() => handleUserSelect(user._id)}
-                                style={{ padding: '5px 10px', cursor: 'pointer' }}
+                                style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #ccc' }}
                             >
                                 {user.username} ({user.email})
                             </li>
@@ -112,7 +116,14 @@ const Navbar = ({ setChats, setSelectedChat }) => {
 
                 <button
                     onClick={handleLogout}
-                    style={{ background: 'red', color: 'white', border: 'none', padding: '5px 10px' }}
+                    style={{
+                        background: 'red',
+                        color: 'white',
+                        border: 'none',
+                        padding: '8px 12px',
+                        borderRadius: '5px',
+                        marginLeft: '10px'
+                    }}
                 >
                     Logout
                 </button>
