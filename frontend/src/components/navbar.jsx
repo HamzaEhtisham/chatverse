@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Navbar = () => {
+const Navbar = ({ setChats, setSelectedChat }) => {
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         navigate('/');
     };
 
@@ -39,22 +40,40 @@ const Navbar = () => {
             };
 
             const { data } = await axios.post('/api/chat/access', { userId }, config);
-            console.log('Chat created/opened:', data);
             setResults([]);
             setSearch('');
-            // Optionally navigate to the chat screen
+
+            // Update the chat list and selected chat
+            if (setChats) {
+                setChats(prev => {
+                    const exists = prev.find(chat => chat._id === data._id);
+                    return exists ? prev : [data, ...prev];
+                });
+            }
+
+            if (setSelectedChat) {
+                setSelectedChat(data);
+            }
+
         } catch (error) {
             console.error('Error accessing chat:', error);
         }
     };
 
     return (
-        <nav style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white' }}>
+        <nav style={{
+            padding: '10px',
+            backgroundColor: '#007BFF',
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            position: 'relative'
+        }}>
             <h1>ChatVerse</h1>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Link to="/home" style={{ color: 'white', marginRight: '10px' }}>Home</Link>
 
-                {/* Search Input */}
                 <input
                     type="text"
                     placeholder="Search users..."
@@ -66,11 +85,10 @@ const Navbar = () => {
                     Search
                 </button>
 
-                {/* Search Results Dropdown */}
                 {results.length > 0 && (
                     <ul style={{
                         position: 'absolute',
-                        top: '60px',
+                        top: '50px',
                         backgroundColor: 'white',
                         color: 'black',
                         listStyle: 'none',
@@ -78,6 +96,7 @@ const Navbar = () => {
                         borderRadius: '5px',
                         boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
                         zIndex: 999,
+                        width: '250px'
                     }}>
                         {results.map((user) => (
                             <li
