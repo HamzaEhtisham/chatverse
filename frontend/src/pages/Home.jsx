@@ -67,19 +67,6 @@ const Home = () => {
                 >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#333' }}>Your Chats</h2>
-                        <button
-                            onClick={() => setShowModal(true)}
-                            style={{
-                                padding: '8px 12px',
-                                backgroundColor: '#007bff',
-                                color: '#fff',
-                                border: 'none',
-                                borderRadius: '5px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            + New Group
-                        </button>
                     </div>
                     {loading ? (
                         <p style={{ textAlign: 'center', marginTop: '20px', color: '#666' }}>Loading chats...</p>

@@ -20,6 +20,7 @@ const upload = multer({ storage });
 router.post('/register', registerUser); // Register user
 router.post('/login', loginUser); // Login user
 
+
 // Profile picture upload route
 router.post('/upload', protect, upload.single('profilePic'), (req, res) => {
     res.status(200).json({ filePath: `/uploads/${req.file.filename}` });
