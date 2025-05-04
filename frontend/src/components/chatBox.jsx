@@ -15,7 +15,7 @@ const ChatBox = ({ chat, currentUser }) => {
             try {
                 const token = localStorage.getItem('token');
                 const { data } = await axios.get(
-                    `http://localhost:5000/api/messages/${chat._id}`,
+                    `https://chatverse-backend-9ymo.onrender.com/api/messages/${chat._id}`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -66,7 +66,7 @@ const ChatBox = ({ chat, currentUser }) => {
         try {
             const token = localStorage.getItem('token');
             const { data } = await axios.post(
-                'http://localhost:5000/api/messages',
+                'https://chatverse-backend-9ymo.onrender.com/api/messages',
                 { chatId: chat._id, content: newMessage },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

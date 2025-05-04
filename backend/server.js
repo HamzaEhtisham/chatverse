@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: ['https://chatverse-backend-9ymo.onrender.com', 'http://localhost:3000'], // Add your frontend's HTTPS URL
+    origin: 'https://chatverse-backend-9ymo.onrender.com', // Add your frontend's HTTPS URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     credentials: true, // Allow cookies and credentials
 }));
@@ -48,10 +48,7 @@ app.get('*', (req, res) => {
 // WebSocket Setup
 const io = new Server(server, {
     cors: {
-        origin: [
-            'https://chatverse-backend-9ymo.onrender.com', // Production frontend
-            'http://localhost:3000', // Local development frontend
-        ],
+        origin: 'https://chatverse-backend-9ymo.onrender.com', // Production frontend 
         methods: ['GET', 'POST'],
         credentials: true,
     },
