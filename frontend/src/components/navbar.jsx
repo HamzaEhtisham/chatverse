@@ -14,7 +14,7 @@ const Navbar = ({ setChats, setSelectedChat }) => {
     };
 
     const handleSearch = async () => {
-        if (!search) return setResults([]);
+        if (!search) return setResults([]); // If search is empty, clear results
 
         try {
             const config = {
@@ -24,7 +24,7 @@ const Navbar = ({ setChats, setSelectedChat }) => {
             };
 
             const { data } = await axios.get(`/api/user?search=${search}`, config);
-            setResults(data);
+            setResults(data); // Set search results
         } catch (error) {
             console.error('User search failed', error);
         }
@@ -60,11 +60,6 @@ const Navbar = ({ setChats, setSelectedChat }) => {
         }
     };
 
-    const handleSearchChange = (e) => {
-        setSearch(e.target.value);
-        handleSearch(); // Trigger search as the user types
-    };
-
     return (
         <nav style={{
             padding: '10px',
@@ -83,9 +78,25 @@ const Navbar = ({ setChats, setSelectedChat }) => {
                     type="text"
                     placeholder="Search users..."
                     value={search}
-                    onChange={handleSearchChange}
+                    onChange={(e) => setSearch(e.target.value)}
                     style={{ padding: '8px', marginRight: '5px', borderRadius: '4px' }}
                 />
+
+                {/* Search Button */}
+                <button
+                    onClick={handleSearch}
+                    style={{
+                        padding: '8px 12px',
+                        backgroundColor: '#007BFF',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        marginLeft: '5px'
+                    }}
+                >
+                    Search
+                </button>
 
                 {results.length > 0 && (
                     <ul style={{
@@ -99,7 +110,7 @@ const Navbar = ({ setChats, setSelectedChat }) => {
                         boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
                         zIndex: 999,
                         width: '250px',
-                        maxHeight: '300px', // To prevent it from overflowing the page
+                        maxHeight: '300px', // Prevent overflow
                         overflowY: 'auto',
                     }}>
                         {results.map((user) => (
