@@ -48,7 +48,7 @@ app.get('*', (req, res) => {
 // WebSocket Setup
 const io = new Server(server, {
     cors: {
-        origin: 'https://chatverse-backend-9ymo.onrender.com', // Production frontend 
+        origin: 'https://chatverse-1-i4ew.onrender.com', // Production frontend 
         methods: ['GET', 'POST'],
         credentials: true,
     },
