@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.chat-list div:hover {
+    background-color: #f0f0f0;
+}
+
+button {
+    cursor: pointer;
+}
