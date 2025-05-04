@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: ['https://chatverse-backend-9ymo.onrender.com'], // Add your frontend's HTTPS URL
+    origin: ['https://chatverse-backend-9ymo.onrender.com', 'http://localhost:3000'], // Add your frontend's HTTPS URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     credentials: true, // Allow cookies and credentials
 }));
@@ -48,12 +48,14 @@ app.get('*', (req, res) => {
 // WebSocket Setup
 const io = new Server(server, {
     cors: {
-        origin: ['https://chatverse-backend-9ymo.onrender.com'], // Add your frontend's HTTPS URL
+        origin: [
+            'https://chatverse-backend-9ymo.onrender.com', // Production frontend
+            'http://localhost:3000', // Local development frontend
+        ],
         methods: ['GET', 'POST'],
         credentials: true,
     },
 });
-
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
 
@@ -64,22 +66,12 @@ io.on('connection', (socket) => {
 
     socket.on('new_message', (message) => {
         const { chatId } = message;
+        console.log(`Message sent to chat: ${chatId}`, message);
         io.to(chatId).emit('message_received', message);
     });
 
     socket.on('disconnect', () => {
         console.log('A user disconnected:', socket.id);
-    });
-
-    socket.on('join_chat', (chatId) => {
-        socket.join(chatId);
-        console.log(`User ${socket.id} joined chat: ${chatId}`);
-    });
-
-    socket.on('new_message', (message) => {
-        const { chatId } = message;
-        console.log(`Message sent to chat: ${chatId}`, message);
-        io.to(chatId).emit('message_received', message);
     });
 });
 
