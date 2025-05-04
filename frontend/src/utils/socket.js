@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
 // Initialize socket connection
-const socket = io(`https://chatverse-backend-9ymo.onrender.com`, {
+const socket = io(`https://chatverse-1-i4ew.onrender.com`, {
     transports: ['websocket'], // Use WebSocket for better performance
     reconnection: true, // Automatically reconnect if disconnected
 });

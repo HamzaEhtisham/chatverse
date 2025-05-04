@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: 'https://chatverse-backend-9ymo.onrender.com', // Add your frontend's HTTPS URL
+    origin: 'https://chatverse-1-i4ew.onrender.com', // Add your frontend's HTTPS URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     credentials: true, // Allow cookies and credentials
 }));
