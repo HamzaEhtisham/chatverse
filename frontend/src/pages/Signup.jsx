@@ -21,6 +21,7 @@ const Signup = () => {
         setLoading(true);
 
         try {
+            // Send signup request to the backend
             await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/register`, formData);
             navigate('/login'); // Redirect to login page after successful signup
         } catch (err) {
@@ -31,7 +32,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="form-container">
+        <div className=".form-container">
             <h1>Sign Up</h1>
             {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
@@ -43,10 +44,10 @@ const Signup = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="form-input"
+                        className=".form-input"
                     />
                 </div>
-                <div className="form-group">
+                <div className=".form-group">
                     <input
                         type="email"
                         name="email"
@@ -57,7 +58,7 @@ const Signup = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="form-group">
+                <div className=".form-group">
                     <input
                         type="password"
                         name="password"
@@ -65,16 +66,16 @@ const Signup = () => {
                         value={formData.password}
                         onChange={handleChange}
                         required
-                        className="form-input"
+                        className=".form-input"
                     />
                 </div>
-                <button type="submit" className="form-button" disabled={loading}>
+                <button type="submit" className=".form-button" disabled={loading}>
                     {loading ? 'Signing up...' : 'Sign Up'}
                 </button>
             </form>
 
-            <p className="login-text">
-                Already have an account? <Link to="/login">Log in here</Link>
+            <p className=".login-text">
+                Already have an account? <Link to="/Login">Log in here</Link>
             </p>
         </div>
     );

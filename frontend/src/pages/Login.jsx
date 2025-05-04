@@ -22,13 +22,13 @@ const Login = () => {
 
         try {
             const { data } = await axios.post(
-                `${process.env.REACT_APP_BACKEND_URL}/api/user/login`,
+                `${process.env.REACT_APP_BACKEND_URL}/api/user/Login`,
                 formData
             );
             // Save token and user data to localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data));
-            navigate('/home'); // Redirect to home page
+            navigate('/Home'); // Redirect to home page
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password');
         } finally {
@@ -37,11 +37,11 @@ const Login = () => {
     };
 
     return (
-        <div className="form-container">
+        <div className=".form-container">
             <h1>Login</h1>
             {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className=".form-group">
                     <input
                         type="email"
                         name="email"
@@ -49,10 +49,10 @@ const Login = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="form-input"
+                        className=".form-input"
                     />
                 </div>
-                <div className="form-group">
+                <div className=".form-group">
                     <input
                         type="password"
                         name="password"
@@ -60,16 +60,16 @@ const Login = () => {
                         value={formData.password}
                         onChange={handleChange}
                         required
-                        className="form-input"
+                        className=".form-input"
                     />
                 </div>
-                <button type="submit" className="form-button" disabled={loading}>
+                <button type="submit" className=".form-button" disabled={loading}>
                     {loading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
 
-            <p className="signup-text">
-                Don't have an account? <Link to="/signup">Sign up here</Link>
+            <p className=".signup-text">
+                Don't have an account? <Link to="/Signup">Sign up here</Link>
             </p>
         </div>
     );
